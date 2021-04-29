@@ -1,4 +1,5 @@
 import { signIn, useSession } from 'next-auth/client';
+import { Session } from 'next-auth';
 import { useRouter } from 'next/router';
 import { api } from '../../services/api';
 import { getStripeJs } from '../../services/stripe-js';
@@ -8,8 +9,12 @@ interface SubscribeButtonProps {
   priceId: string;
 }
 
+interface sessionProps extends Session {
+  activeSubscription?: boolean;
+}
+
 export function SubscribeButton({ priceId }: SubscribeButtonProps) {
-  const [session] = useSession();
+  const [ session ] = useSession() as [sessionProps, boolean];
   const router = useRouter();
 
   async function handleSubscribe() {
@@ -18,7 +23,7 @@ export function SubscribeButton({ priceId }: SubscribeButtonProps) {
       return;
     }
 
-    if (session?.activeSubscription) {
+    if (session.activeSubscription) {
       router.push('/posts')
       
       return;
