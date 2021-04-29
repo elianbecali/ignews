@@ -9,6 +9,7 @@ import { getPrismicClient } from '../../../services/prismic';
 
 import styles from '../post.module.scss';
 import { useRouter } from 'next/router';
+import { sessionProps } from '../../../@types/useSession';
 
 interface PostPreviewProps {
   post: {
@@ -20,11 +21,11 @@ interface PostPreviewProps {
 }
 
 export default function PostPreview({ post }: PostPreviewProps) {
-  const [session] = useSession();
+  const [session] = useSession() as [sessionProps, boolean];
   const router = useRouter();
 
   useEffect(() => {
-    if (session?.activeSubscription) {
+    if (session.activeSubscription) {
       router.push(`/posts/${post.slug}`)
     }
   }, [session]);
