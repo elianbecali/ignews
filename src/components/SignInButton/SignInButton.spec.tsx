@@ -6,7 +6,7 @@ import { SignInButton } from '.';
 
 jest.mock('next-auth/client');
 
-describe('ActiveLink component', () => {
+describe('SignInButton component', () => {
   it('renders correctly when user is not authenticated', () => {
     const useSessionMocked = mocked(useSession);
     
